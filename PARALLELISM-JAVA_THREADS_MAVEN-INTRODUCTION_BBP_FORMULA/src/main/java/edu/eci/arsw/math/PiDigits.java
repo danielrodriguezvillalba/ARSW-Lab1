@@ -1,5 +1,7 @@
 package edu.eci.arsw.math;
 
+import java.util.ArrayList;
+
 import edu.eci.arsw.threads.BBPThread;
 
 ///  <summary>
@@ -51,23 +53,26 @@ public class PiDigits {
     
     public static byte[] getDigits(int start, int count, int n) {
     	double inicio = start;
-    	double contar = count/n;
+    	int contar = count/n;
+    	ArrayList<BBPThread> l = new ArrayList<BBPThread>();
     	String resp = "";
-    	byte[][] res = new byte[n+1][];
-		for (int i=1; i<=n;i++) {
+		for (int i=0; i<n;i++) {
 			BBPThread hilo = new BBPThread(inicio, contar);
 			inicio += contar;
 			hilo.start();
+			l.add(hilo);
+		}
+		for(int j=0 ; j<n;j++) {
+			BBPThread hil = l.get(j);
 			try {
-				hilo.join();
-				res[i]= hilo.getRes() ;
-				resp += Main.bytesToHex(res[i]);
+				hil.join();
+				resp += Main.bytesToHex(hil.getRes());
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}	
 		}
 		System.out.println(resp);
-		return res[0];
+		return null;
 	}
 
     /// <summary>
