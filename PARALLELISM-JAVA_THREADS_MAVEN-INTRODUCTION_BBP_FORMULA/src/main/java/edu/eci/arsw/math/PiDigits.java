@@ -56,7 +56,7 @@ public class PiDigits {
     	byte[][] res = new byte[n+1][];
 		for (int i=1; i<=n;i++) {
 			BBPThread hilo = new BBPThread(inicio, contar);
-			inicio = contar * i + 1;
+			inicio += contar;
 			hilo.start();
 			try {
 				hilo.join();
