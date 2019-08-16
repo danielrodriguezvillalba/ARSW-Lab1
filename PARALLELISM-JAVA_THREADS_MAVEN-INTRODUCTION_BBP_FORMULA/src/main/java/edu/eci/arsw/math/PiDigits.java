@@ -50,22 +50,23 @@ public class PiDigits {
     }
     
     public static byte[] getDigits(int start, int count, int n) {
-    	double inicio = 0;
-    	double contar = 1000000/n;
-    	byte[][] res = new byte[n][];
+    	double inicio = start;
+    	double contar = count/n;
+    	String resp = "";
+    	byte[][] res = new byte[n+1][];
 		for (int i=1; i<=n;i++) {
 			BBPThread hilo = new BBPThread(inicio, contar);
-			inicio = contar * i;
+			inicio = contar * i + 1;
 			hilo.start();
 			try {
 				hilo.join();
 				res[i]= hilo.getRes() ;
-				System.out.println("  ");
-				System.out.println(res[i]);
+				resp += Main.bytesToHex(res[i]);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}	
 		}
+		System.out.println(resp);
 		return res[0];
 	}
 
