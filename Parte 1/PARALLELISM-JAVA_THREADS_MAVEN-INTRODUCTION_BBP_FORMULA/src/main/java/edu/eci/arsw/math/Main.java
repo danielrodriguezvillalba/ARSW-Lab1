@@ -5,7 +5,7 @@
  */
 package edu.eci.arsw.math;
 
-import java.util.Arrays;
+import java.lang.Runtime;
 
 /**
  *
@@ -14,11 +14,13 @@ import java.util.Arrays;
 public class Main {
 
     public static void main(String a[]) {
+    	Runtime ru = Runtime.getRuntime();
         //System.out.println(bytesToHex(PiDigits.getDigits(0, 100000)));
         //System.out.println(bytesToHex(PiDigits.getDigits(20, 100000)));
         //System.out.println(bytesToHex(PiDigits.getDigits(1, 1000000)));
         //System.out.println(bytesToHex(PiDigits.getDigits(0, 20,10)));
-        PiDigits.getDigits(20, 100000,5);	
+    	System.out.println(ru.availableProcessors());
+        PiDigits.getDigits(0, 100000,200);	
     }
 
     private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
