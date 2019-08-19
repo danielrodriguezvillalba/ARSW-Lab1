@@ -20,7 +20,7 @@ public class Main {
         //System.out.println(bytesToHex(PiDigits.getDigits(1, 1000000)));
         //System.out.println(bytesToHex(PiDigits.getDigits(0, 20,10)));
     	System.out.println(ru.availableProcessors());
-        PiDigits.getDigits(0, 100000,200);	
+    	System.out.println(bytesToHex(PiDigits.getDigits(0, 10000,200)));	
     }
 
     private final static char[] hexArray = "0123456789ABCDEF".toCharArray();

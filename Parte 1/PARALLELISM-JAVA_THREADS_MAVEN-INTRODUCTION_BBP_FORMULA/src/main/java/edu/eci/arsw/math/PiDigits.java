@@ -56,23 +56,28 @@ public class PiDigits {
     	int contar = count/n;
     	ArrayList<BBPThread> l = new ArrayList<BBPThread>();
     	String resp = "";
+    	byte[] respBy = new byte[count];
 		for (int i=0; i<n;i++) {
 			BBPThread hilo = new BBPThread(inicio, contar);
 			inicio += contar;
 			hilo.start();
 			l.add(hilo);
 		}
+		int con = 0;
 		for(int j=0 ; j<n;j++) {
 			BBPThread hil = l.get(j);
 			try {
 				hil.join();
 				resp += Main.bytesToHex(hil.getRes());
+				for(int k = 0; k<hil.getRes().length;k++) {
+					respBy[con] = hil.getRes()[k];
+					con+=1;
+				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}	
 		}
-		System.out.println(resp);
-		return null;
+		return respBy;
 	}
 
     /// <summary>
