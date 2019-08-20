@@ -39,14 +39,17 @@ public class MainCanodromo {
 
                                 }
                                
-				can.winnerDialog(reg.getGanador(),reg.getUltimaPosicionAlcanzada() - 1); 
-                                System.out.println("El ganador fue:" + reg.getGanador());
+				
                             }
                         }.start();
-
+                        
                     }
+                    
                 }
+               
         );
+        can.winnerDialog(reg.getGanador(),reg.getUltimaPosicionAlcanzada() - 1); 
+        System.out.println("El ganador fue:" + reg.getGanador());
 
         can.setStopAction(
                 new ActionListener() {
