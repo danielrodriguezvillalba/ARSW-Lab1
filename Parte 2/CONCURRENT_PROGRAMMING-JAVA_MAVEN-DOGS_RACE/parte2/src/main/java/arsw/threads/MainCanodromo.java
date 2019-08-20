@@ -1,4 +1,4 @@
-package arsw.threads;
+	package arsw.threads;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,9 +36,23 @@ public class MainCanodromo {
                                     galgos[i] = new Galgo(can.getCarril(i), "" + i, reg);
                                     //inicia los hilos
                                     galgos[i].start();
-
+                                                                  
+                                    
                                 }
-                               
+                                boolean var = true;
+                                for (Galgo j : galgos) {
+                                	try {
+                        				j.join();
+                        				if (var) {
+                        					can.winnerDialog(reg.getGanador(),reg.getUltimaPosicionAlcanzada() - 1); 
+                        					System.out.println("El ganador fue:" + reg.getGanador());
+                        					var = false;
+                        				}
+                        			} catch (InterruptedException e1) {
+                        				// TODO Auto-generated catch block
+                        				e1.printStackTrace();
+                        			}
+                                }
 				
                             }
                         }.start();
@@ -48,13 +62,23 @@ public class MainCanodromo {
                 }
                
         );
-        can.winnerDialog(reg.getGanador(),reg.getUltimaPosicionAlcanzada() - 1); 
-        System.out.println("El ganador fue:" + reg.getGanador());
+        
+        
 
         can.setStopAction(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                    		for (Galgo j : galgos) {
+                        		try {
+                        			j.wait();
+                        			
+    							} catch (InterruptedException e1) {
+    								e1.printStackTrace();
+    							}
+                        	}
+						
+                    	
                         System.out.println("Carrera pausada!");
                     }
                 }
@@ -64,6 +88,7 @@ public class MainCanodromo {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                    	this.notifyAll();
                         System.out.println("Carrera reanudada!");
                     }
                 }
