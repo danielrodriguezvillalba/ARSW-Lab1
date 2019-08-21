@@ -7,6 +7,12 @@ Nicolas Cardenas Chaparro
 
 Daniel Felipe Rodriguez Villalba
 ```
+## Compile and run instructions:
+
+Ubicarse sobre el directorio en el cual se va a trabajar
+* Compilar: Use el comando `mvn package`
+* Ejecutar Pruebas: Use el comando `mvn test`
+
 
 ## BBP Formula
 ### Part I - Introduction to Java Threads
