@@ -28,13 +28,13 @@ R: Si, la salida cambia ya que al usar el start se ejecutan los hilos de manera 
 
 ### Part I
 
-#### 1: 
+#### Punto 1: 
 
 Como se puede observar en la imagen este es el rendimiento mostrado del programa con 1 hilo (hay 2 pero se debe tener en cuenta que el main es un hilo).
 
 ![Imagenes](https://github.com/danielrodriguezvillalba/ARSW-Lab1/blob/master/Imagenes/Verificando1Hilo.PNG)
 
-#### 2:
+#### Punto 2:
 
 El programa se dividio en las tres partes pedidas y el resultado en el codigo fue el siguiente:
 
@@ -46,7 +46,7 @@ Seguido esto se procedio a medir el procesamiento de los nucleos por medio de Ja
 
 ![Imagenes](https://github.com/danielrodriguezvillalba/ARSW-Lab1/blob/master/Imagenes/TresHilos.PNG)
 
-#### 3:
+#### Punto 3:
 
 Al modificar el programa con lo requerido por este punto, el codigo resultante fue el siguiente, en el cual se hace uso de buffer para la lectura de teclado y de la clase TimeTask para calcular los 5 segundos
 
@@ -55,17 +55,17 @@ Al modificar el programa con lo requerido por este punto, el codigo resultante f
 
 ### Part III
 
-#### 1:
+#### Punto 1:
 
 Se hizo uso como se sugeria en el punto del metodo .join() de los hilos para que esto mostrara el numero del ganador, despues de acabados todos los hilos, el resultado fue este:
 
 ![Imagenes](https://github.com/danielrodriguezvillalba/ARSW-Lab1/blob/master/Imagenes/Join.PNG)
 
-#### 2:
+#### Punto 2:
 
 Al momento de correr la aplicación pudimos observar que esta al momento de mostrar las posiciones de los perros, habian unas que se repetian, por lo que identificamos al momento de acceder a las posiciones como zona critica.
 
-#### 3:
+#### Punto 3:
 
 Despues de identificar la zona critica se procedio a hacer uso de lo visto en clase con los bloques de Synchronized, en la clase Galgo en el metodo corra(), el codigo quedo de la siguiente manera:
 
@@ -78,7 +78,7 @@ El resultado obtenido respecto a las posiciones, al ejecutar la aplicación con 
 
 ![Imagenes](https://github.com/danielrodriguezvillalba/ARSW-Lab1/blob/master/Imagenes/Results.PNG)
 
-#### 4:
+#### Punto 4:
 
 En la clase MainCanodromo, en los metodos que implementaban estas funcionalidades se realizaron unos cambios, los cuales finalmente quedaron asi:
 
