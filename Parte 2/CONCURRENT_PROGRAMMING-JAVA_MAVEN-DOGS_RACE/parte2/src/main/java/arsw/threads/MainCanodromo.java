@@ -36,8 +36,6 @@ public class MainCanodromo {
                                     galgos[i] = new Galgo(can.getCarril(i), "" + i, reg);
                                     //inicia los hilos
                                     galgos[i].start();
-                                                                  
-                                    
                                 }
                                 boolean var = true;
                                 for (Galgo j : galgos) {
@@ -49,7 +47,6 @@ public class MainCanodromo {
                         					var = false;
                         				}
                         			} catch (InterruptedException e1) {
-                        				// TODO Auto-generated catch block
                         				e1.printStackTrace();
                         			}
                                 }
@@ -69,16 +66,9 @@ public class MainCanodromo {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                    		for (Galgo j : galgos) {
-                        		try {
-                        			j.wait();
-                        			
-    							} catch (InterruptedException e1) {
-    								e1.printStackTrace();
-    							}
-                        	}
-						
-                    	
+                        for (Galgo j : galgos) {
+                        	j.setPause(true);
+                        }
                         System.out.println("Carrera pausada!");
                     }
                 }
@@ -88,12 +78,21 @@ public class MainCanodromo {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                    	this.notifyAll();
+                    	synchronized (reg) {
+                    		reg.notifyAll();
+                    		for (Galgo j : galgos) {
+                            	j.setPause(false);
+                            }
+						}
                         System.out.println("Carrera reanudada!");
                     }
                 }
         );
 
+    }
+    
+    public static RegistroLlegada getMonitor(){
+    	return reg;
     }
 
 }

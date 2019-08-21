@@ -9,6 +9,7 @@ package arsw.threads;
 public class Galgo extends Thread {
 	private int paso;
 	private Carril carril;
+	boolean inPause;
 	RegistroLlegada regl;
 
 	public Galgo(Carril carril, String name, RegistroLlegada reg) {
@@ -16,32 +17,54 @@ public class Galgo extends Thread {
 		this.carril = carril;
 		paso = 0;
 		this.regl=reg;
+		inPause=false;
 	}
+	
+	public void setPause( boolean p) {
+		inPause = p;
 
+	}
+	
+	
 	public void corra() throws InterruptedException {
-		while (paso < carril.size()) {			
-			Thread.sleep(100);
-			carril.setPasoOn(paso++);
-			carril.displayPasos(paso);
-			
-			if (paso == carril.size()) {						
-				carril.finish();
-				synchronized (regl){
-					int ubicacion=regl.getUltimaPosicionAlcanzada();
-					regl.setUltimaPosicionAlcanzada(ubicacion+1);
-					System.out.println("El galgo "+this.getName()+" llego en la posicion "+ubicacion);
-					if (ubicacion==1){
-						regl.setGanador(this.getName());
+			while (paso < carril.size()) {
+				if(!inPause) {
+					Thread.sleep(100);
+					carril.setPasoOn(paso++);
+					carril.displayPasos(paso);
+					
+					if (paso == carril.size()) {						
+						carril.finish();
+						synchronized (regl){
+							int ubicacion=regl.getUltimaPosicionAlcanzada();
+							regl.setUltimaPosicionAlcanzada(ubicacion+1);
+							System.out.println("El galgo "+this.getName()+" llego en la posicion "+ubicacion);
+							if (ubicacion==1){
+								regl.setGanador(this.getName());
+							}
+						}
 					}
 				}
-				
-				
-				
+				else {
+					pause();
+				}
 			}
-		}
 	}
 
-
+	
+	public void pause() {
+		if (inPause) {
+			synchronized (MainCanodromo.getMonitor()) {
+				try {
+					MainCanodromo.getMonitor().wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		inPause=false;
+	}
+	
 	@Override
 	public void run() {
 		
