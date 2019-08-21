@@ -2,9 +2,9 @@
 
 
 ## Nombres:
-´´´
+'''
 Nicolas Cardenas Chaparro
-´´´
+'''
 Daniel Felipe Rodriguez Villalba
 
 
