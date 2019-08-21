@@ -112,6 +112,8 @@ public class BBpFormulaThread extends Thread{
 
 3. Adjust the JUnit tests, considering the cases of using 1, 2 or 3 threads (the last one to consider an odd number of threads!)
 
+`Las pruebas se realizaron con el 20-milesimo digito de pi ya que la prueba de 1 millon en el codigo secuencial(El original con el que se compara) se tarda demasiado`
+
 ````
 @Test
     public void ResSecuencialDebeSerIgualResParalela1thread() throws InterruptedException {
@@ -142,7 +144,9 @@ From the above, implement the following sequence of experiments to calculate the
   * As many threads as processing cores (have the program determine this using the Runtime API). 
   * So many threads as double processing cores. 
   * 200 threads.
-  * 500 threads 
+  ![Imagenes](https://github.com/danielrodriguezvillalba/ARSW-Lab1/blob/master/Imagenes/200Hilos1millon.PNG)
+  * 500 threads. 
+  
   
 When starting the program, run the jVisualVM monitor, and as the tests run, check and record the CPU and memory consumption in each case.
 
