@@ -25,7 +25,42 @@ Ubicarse sobre el directorio en el cual se va a trabajar
 ### Part II - BBP Formula Exercise
 
 1. Create a Thread type class that represents the life cycle of a thread that calculates a portion of the required digits. 
+````
+package edu.eci.arsw.math;
 
+/* this class is used to calculate a portion of the nth digit of pi */
+
+public class BBpFormulaThread extends Thread{
+	
+	private String res;
+	private String nameTh;
+	private ThreadGroup tg;
+	private  int start, end;
+	private PiDigits gDigits;
+//	private Main aHexa;
+	
+	public BBpFormulaThread(String name, ThreadGroup tg, int start, int end) {
+		super(tg, name);
+		this.nameTh = name;
+		this.tg = tg;
+		this.start = start;
+		this.end = end;
+		gDigits = new PiDigits();
+//		aHexa = new Main();
+		
+	}	
+	@Override
+	public void run() {	
+//		res = nameTh+"////////"+start+"//"+end+"/////////"+ Main.bytesToHex(PiDigits.getDigits(start, end));
+		res = Main.bytesToHex(PiDigits.getDigits(start, end));
+	}
+
+	public String getRes() {return res;}
+	public String getNameTh() {return nameTh;}
+	public ThreadGroup getTg() {return tg;}	
+
+}
+````
 2. Have the PiDigits.getDigits() function receive as an additional parameter an N value, corresponding to the number of threads between which the solution is to be parallelized. Have that function wait until the N threads finish solving the problem to combine the answers and then return the result. For this, review the join method of the Java concurrency API. 
 
 3. Adjust the JUnit tests, considering the cases of using 1, 2 or 3 threads (the last one to consider an odd number of threads!)
