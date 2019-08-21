@@ -63,7 +63,77 @@ public class BBpFormulaThread extends Thread{
 ````
 2. Have the PiDigits.getDigits() function receive as an additional parameter an N value, corresponding to the number of threads between which the solution is to be parallelized. Have that function wait until the N threads finish solving the problem to combine the answers and then return the result. For this, review the join method of the Java concurrency API. 
 
+````
+//This method divides the load of calculate the nth digit of pi into n lightweight loads, then concatenates the result.
+	public static String getDigits(int start, int count, int nThreads) throws InterruptedException {
+		int interval = count / nThreads;
+		int residuo = count % nThreads;
+		int ini = start;
+		int fin = interval;
+		BBpFormulaThread thr;
+
+		ThreadGroup tg = new ThreadGroup("pidigits");
+
+		int ap = Runtime.getRuntime().availableProcessors();
+
+		List<BBpFormulaThread> threadsList = new ArrayList<BBpFormulaThread>();
+
+		for (int i = 1; i <= nThreads; i++) {
+			if (i == 1) {
+				thr = new BBpFormulaThread("piDigits" + i, tg, ini, fin);
+				threadsList.add(thr);
+				thr.start();
+			} else if (i == nThreads) {
+				ini += fin;
+				thr = new BBpFormulaThread("piDigits" + i, tg, ini, fin + residuo);
+				threadsList.add(thr);
+				thr.start();
+			} else {
+				ini += fin;
+				thr = new BBpFormulaThread("piDigits" + i, tg, ini, fin);
+				threadsList.add(thr);
+				thr.start();
+			}
+		}
+		//Have the main thread to wait to the other threads
+		for (int i = 0; i < threadsList.size(); i++) {
+			threadsList.get(i).join();
+		}
+
+		/* finally concatenate the results */
+		StringBuilder sb = new StringBuilder();
+		for (int f = 0; f < threadsList.size(); f++) {
+			sb.append(threadsList.get(f).getRes());
+			respuesta = sb.toString();
+		}
+		return respuesta;
+	}
+````
+
 3. Adjust the JUnit tests, considering the cases of using 1, 2 or 3 threads (the last one to consider an odd number of threads!)
+
+````
+@Test
+    public void ResSecuencialDebeSerIgualResParalela1thread() throws InterruptedException {
+    	String s1 = new String(Main.bytesToHex(PiDigits.getDigits(1, 20000)));
+    	String s2 = new String(PiDigits.getDigits(1, 20000, 1));
+    	assertTrue(s1.equals(s2));
+    }
+    
+    @Test
+    public void ResSecuencialDebeSerIgualResParalela2threads() throws InterruptedException {
+    	String s1 = new String(Main.bytesToHex(PiDigits.getDigits(1, 20000)));
+    	String s2 = new String(PiDigits.getDigits(1, 20000, 2));
+    	assertTrue(s1.equals(s2));
+    }
+    
+    @Test
+    public void ResSecuencialDebeSerIgualResParalela3threads() throws InterruptedException {
+    	String s1 = new String(Main.bytesToHex(PiDigits.getDigits(1, 6666)) + Main.bytesToHex(PiDigits.getDigits(6667, 6666)) + Main.bytesToHex(PiDigits.getDigits(13333, 6668)));
+    	String s2 = new String(PiDigits.getDigits(1, 20000, 3));
+    	assertTrue(s1.equals(s2));
+    }
+````
 
 ### Part III - Performance Evaluation
 From the above, implement the following sequence of experiments to calculate the million digits (hex) of PI, taking their execution times (be sure to do them on the same machine):
