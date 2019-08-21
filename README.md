@@ -24,4 +24,5 @@ R: Si, la salida cambia ya que al usar el start se ejecutan los hilos de manera 
 #### Punto 1: 
 
 Como se puede observar en la imagen este es el rendimiento mostrado del programa con 1 hilo
+
 ![Imagenes](https://github.com/danielrodriguezvillalba/ARSW-Lab1/tree/master/Imagenes/Verificando1Hilo.PNG)
